@@ -1,0 +1,41 @@
+name: Python CI
+
+on:
+  push:
+    branches:
+      - main  # Pastikan ini sesuai dengan branch yang Anda gunakan
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Menjalankan di environment Ubuntu
+
+    steps:
+    # Langkah 1: Checkout kode dari GitHub
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # Langkah 2: Setup Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'  # Sesuaikan versi Python jika diperlukan
+
+    # Langkah 3: Install dependensi
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip  # Upgrade pip
+        pip install -r requirements.txt      # Install dependensi dari requirements.txt
+
+    # Langkah 4: Jalankan script Python
+    - name: Run script
+      run: python folder_monitor.py  # Jalankan script yang memeriksa URL dan menyimpan hasil
+
+    # Langkah 5: Upload processed file as artifact
+    - name: Upload processed file as artifact
+      uses: actions/upload-artifact@v4.4.3
+      with:
+        name: status-folder-output  # Nama artifact
+        path: status-folder.csv     # Path file output yang dihasilkan
