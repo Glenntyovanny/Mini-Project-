@@ -31,4 +31,4 @@ jobs:
 
     # Langkah 4: Jalankan skrip Python untuk memantau folder
     - name: Run folder monitor script
-      run: python monitor_folder.py 
+      run: python folder_monitor.py 
